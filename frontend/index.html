@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joint Account</title>
+</head>
+<body>
+    <header>
+        <h1>Blockchain Practice Project</h1>
+        <h2>#1. Joint Account</h2>
+        <button onclick="getAccess()"">Connect</button>
+    </header>
+    <main>
+        <div>
+            <h3>Open a joint account</h3>
+            <input type="text" id="owners"/>
+            <button onclick="openAccountHandler()">Open Account</button>
+        </div>
+        <div>
+            <h3>View My Accounts (ID)</h3>
+            <button onclick="getUserAccountsHandler()">View</button>
+            <p id="accounts"></p>
+        </div>
+        <div>
+            <h3>Deposit To The Joint Account</h3>
+            <input type="text" id="deposit"/>
+            <button onclick="depositHandler()">Deposit</button>
+        </div>
+        <div>
+            <h3>Request A Withdrawl</h3>
+            <input type="text" id="request"/>
+            <button onclick="requestWithdrawHandler()">Request</button>
+        </div>
+        <div>
+            <h3>Approve A Withdrawl</h3>
+            <input type="text" id="approve"/>
+            <button onclick="approveWithdrawHandler()">Approve</button>
+        </div>
+        <div>
+            <h3>Withdraw</h3>
+            <input type="text" id="approve"/>
+            <button onclick="withdrawHandler()">Withdraw</button>
+        </div>
+        <div>
+            <h3>Events</h3>
+            <div id="events"></div>
+        </div>
+    </main>
+    <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"
+        type="application/javascript"></script>
+    <script type="text/javascript" src="script.js"></script>
+</body>
+</html>
