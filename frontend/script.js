@@ -1,4 +1,3 @@
-console.log("hello world!");
 const provider = new ethers.providers.Web3Provider(window.ethereum);
 const abi = [
   "event AccountOpened(uint256 indexed accountId, address indexed openUser, address[] owners, uint256 timestamp)",
@@ -25,59 +24,84 @@ async function getAccess() {
   await provider.send("eth_requestAccounts", []);
   const signer = provider.getSigner();
   contract = new ethers.Contract(address, abi, signer);
-  console.log("accessed!");
-  console.log(contract);
-  // const eventLog = document.getElementById("events");
-  // contract.on("AccountOpened", (id, user, owners) => {
-  //     eventLog.append(`ID: ${id} USER: ${user}`);
-  // })
 }
 //0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC,0x90F79bf6EB2c4f870365E785982E1f101E93b906
 async function openAccountHandler() {
-  console.log("open account called!");
   await getAccess();
   const owners = document
     .getElementById("owners")
     .value.split(",")
     .filter((n) => n);
-  console.log(owners);
-  await contract.openAccount(owners);
-  const eventLog = document.getElementById("events");
-  contract.on("AccountOpened", (id, user, owners) => {
-    eventLog.append(`ID: ${id} USER: ${user}`);
-  });
-}
-
-async function getUserAccountsHandler() {
-  console.log("get user's accounts called!");
-  await getAccess();
-  const result = await contract.getUserAccounts();
-  console.log(result);
-  document.getElementById("accounts").innerHTML = result;
+  await contract
+    .openAccount(owners)
+    .then(() => alert("Open Account Success!"))
+    .catch((err) => alert(err));
+  // const eventLog = document.getElementById("events");
+  // contract.on("AccountOpened", (id, user, owners) => {
+  //   eventLog.append(`ID: ${id} USER: ${user}`);
+  // });
 }
 
 async function depositHandler() {
-  console.log("deposit!");
+  const acctIdDep = document.getElementById("acctIdDep").value;
+  const amountDep = document.getElementById("amountDep").value;
+  if (!acctIdDep || !amountDep) return;
+  await contract
+    .deposit(acctIdDep, { value: amountDep })
+    .then(() => alert("Deposit Success!"))
+    .catch((err) => alert(err));
 }
 
 async function requestWithdrawHandler() {
-  console.log("request withdrawl!");
+  const acctIdReq = document.getElementById("acctIdReq").value;
+  const amountReq = document.getElementById("amountReq").value;
+  if (!acctIdReq || !amountReq) return;
+  await contract
+    .requestWithdraw(acctIdReq, amountReq)
+    .then(() => alert("Request Withdrawl Success!"))
+    .catch((err) => alert(err));
 }
 
 async function approveWithdrawHandler() {
-  console.log("approve withdrawl!");
+  const acctIdApp = document.getElementById("acctIdApp").value;
+  const withdrawIdApp = document.getElementById("withdrawIdApp").value;
+  if (!acctIdApp || !withdrawIdApp) return;
+  await contract
+    .approveWithdraw(acctIdApp, withdrawIdApp)
+    .then(() => alert("Approve Withdrawl Success!"))
+    .catch((err) => alert(err));
 }
 
 async function withdrawHandler() {
-  console.log("withdraw!");
+  const acctIdWith = document.getElementById("acctIdWith").value;
+  const withdrawIdWith = document.getElementById("withdrawIdWith").value;
+  if (!acctIdWith || !withdrawIdWith) return;
+  await contract
+    .withdraw(acctIdWith, withdrawIdWith)
+    .then(() => alert("Withdraw Success!"))
+    .catch((err) => alert(err));
+}
+
+async function getUserAccountsHandler() {
+  await getAccess();
+  const result = await contract.getUserAccounts();
+  document.getElementById("accounts").innerHTML = result;
 }
 
 async function getAccountBalanceHandler() {
-  console.log("balance!");
+  await getAccess();
+  const acctIdBal = document.getElementById("acctIdBal").value;
+  if (!acctIdBal) return;
+  const result = await contract.getAccountBalance(acctIdBal);
+  document.getElementById("acctBalance").innerHTML = result;
 }
 
 async function getAccountOwnersHandler() {
-  console.log("owners!");
+  await getAccess();
+  const acctIdOwn = document.getElementById("acctIdOwn").value;
+  if (!acctIdOwn) return;
+  const result = await contract.getAccountOwners(acctIdOwn);
+  document.getElementById("acctOwners").innerHTML = result;
 }
 
 async function getApprovalsHandler() {
@@ -87,3 +111,8 @@ async function getApprovalsHandler() {
 async function getIsApprovedHandler() {
   console.log("isApproved!");
 }
+
+// const eventLog = document.getElementById("events");
+// contract.on("AccountOpened", (id, user, owners) => {
+//     eventLog.append(`ID: ${id} USER: ${user}`);
+// })

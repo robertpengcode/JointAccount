@@ -5,49 +5,125 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Joint Account</title>
+    <style>
+        .container {
+            margin: 0.2rem;
+            display: flex;
+            flex-direction: column;
+            /* border: 1px solid blue; */
+            border-bottom: 1px solid black;
+            border-top: 1px solid black;
+            align-items: center;
+        }
+        .row {
+            display: flex;
+            flex-direction: row;
+            /* border: 1px solid green; */
+            width: 100%;
+            justify-content: space-around;
+        }
+        .item {
+            margin: 0.2rem;
+            padding: 0.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* border: 1px solid red; */
+        }
+        .input {
+            width: 10rem;
+            margin-top: 0.1rem;
+        }
+        .btn {
+            width: 10rem;
+            margin-top: 0.1rem;
+        }
+        .info {
+            color: blue;
+        }
+        .small {
+            font-size: 0.7rem;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <h1>Blockchain Practice Project</h1>
-        <h2>#1. Joint Account</h2>
-        <button onclick="getAccess()"">Connect</button>
+        <h1>Blockchain Practice Project #1. Joint Account</h1>
+        <button onclick="getAccess()">Connect</button>
     </header>
-    <main>
-        <div>
-            <h3>Open a joint account</h3>
-            <input type="text" id="owners"/>
-            <button onclick="openAccountHandler()">Open Account</button>
+    <main >
+        <div class="container">
+            <h3>A. Get Account Info</h3>
+            <div class="row">
+                <div class="item">
+                    <h4>1. View My Accounts (ID): <span id="accounts" class="info"></span></h4>
+                    <button class="btn" onclick="getUserAccountsHandler()" >View</button>
+                </div>
+                <div class="item">
+                    <h4>2. View Account Balance: <span id="acctBalance" class="info"></span></h4>
+                    <input class="input" type="text" id="acctIdBal" placeholder="Enter Account ID"/>
+                    <button class="btn" onclick="getAccountBalanceHandler()">View</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="item">
+                    <h4>3. View Account Owners: </h4>
+                    <span id="acctOwners" class="info small"></span>
+                    <input class="input" type="text" id="acctIdOwn" placeholder="Enter Account ID"/>
+                    <button class="btn" onclick="getAccountOwnersHandler()">View</button>
+                </div>
+            </div>
         </div>
-        <div>
-            <h3>View My Accounts (ID)</h3>
-            <button onclick="getUserAccountsHandler()">View</button>
-            <p id="accounts"></p>
+
+        <div class="container">
+            <h3>B. Open Account & Deposit</h3>
+            <div class="row">
+                <div class="item">
+                    <h4>1. Open a joint account</h4>
+                    <input class="input" type="text" id="owners" placeholder="Address1,Address2,..."/>
+                    <button class="btn" onclick="openAccountHandler()">Open Account</button>
+                </div>
+                <div class="item">
+                    <h4>2. Deposit To The Joint Account</h4>
+                    <input class="input" type="text" id="acctIdDep" placeholder="Enter Account ID"/>
+                    <input class="input" type="number" id="amountDep" placeholder="Enter Deposit Amount"/>
+                    <button class="btn" onclick="depositHandler()">Deposit</button>
+                    
+                </div>
+            </div>
         </div>
-        <div>
-            <h3>Deposit To The Joint Account</h3>
-            <input type="text" id="deposit"/>
-            <button onclick="depositHandler()">Deposit</button>
+
+        <div class="container">
+            <h3>C. Withdraw</h3>
+            <div class="row">
+                <div class="item">
+                    <h4>1. Request A Withdrawl</h4>
+                    <input class="input" type="text" id="acctIdReq" placeholder="Enter Account ID"/>
+                    <input class="input" type="number" id="amountReq" placeholder="Enter Withdraw Amount"/>
+                    <button class="btn" onclick="requestWithdrawHandler()">Request</button>
+                </div>
+                <div class="item">
+                    <h4>2. Approve A Withdrawl</h4>
+                    <input class="input" type="text" id="acctIdApp" placeholder="Enter Account ID"/>
+                    <input class="input" type="text" id="withdrawIdApp" placeholder="Enter Withdraw ID"/>
+                    <button class="btn" onclick="approveWithdrawHandler()">Approve</button>
+                </div>
+                <div class="item">
+                    <h4>3. Withdraw</h4>
+                    <input class="input" type="text" id="acctIdWith" placeholder="Enter Account ID"/>
+                    <input class="input" type="text" id="withdrawIdWith" placeholder="Enter Withdraw ID"/>
+                    <button class="btn" onclick="withdrawHandler()">Withdraw</button>
+                </div>
+            </div>
         </div>
-        <div>
-            <h3>Request A Withdrawl</h3>
-            <input type="text" id="request"/>
-            <button onclick="requestWithdrawHandler()">Request</button>
-        </div>
-        <div>
-            <h3>Approve A Withdrawl</h3>
-            <input type="text" id="approve"/>
-            <button onclick="approveWithdrawHandler()">Approve</button>
-        </div>
-        <div>
-            <h3>Withdraw</h3>
-            <input type="text" id="approve"/>
-            <button onclick="withdrawHandler()">Withdraw</button>
-        </div>
+
         <div>
             <h3>Events</h3>
             <div id="events"></div>
         </div>
+
     </main>
+
     <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"
         type="application/javascript"></script>
     <script type="text/javascript" src="script.js"></script>
